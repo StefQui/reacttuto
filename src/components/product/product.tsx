@@ -27,7 +27,7 @@ export default function ProductForm(props: any) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 {props.product.id
-                    ? <h6>Update de {props.product.id} / {props.product.name}</h6>
+                    ? <h6>Update du produit {props.product.id} / {props.product.name}</h6>
                     : <h6>Création d'un produit</h6>}
             </div>
 
