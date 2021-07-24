@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useForm } from 'react-hook-form';
-import { Product } from '../../model/product';
+import { Product } from '../model/product';
 
 type Inputs = {
     name: string,

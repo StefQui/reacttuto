@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Blog from './components/blog/blog';
+import Blog from './components/blog';
+import App from './components/app';
 
 function Square(props) {
     return (
@@ -126,7 +127,7 @@ function Square(props) {
   
   // ========================================
   
-  ReactDOM.render(<Blog />, document.getElementById("root"));
+  ReactDOM.render(<App />, document.getElementById("root"));
   
   function calculateWinner(squares) {
     const lines = [

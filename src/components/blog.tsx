@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import Blotter from '../blotter/blotter'
-import { Product } from '../../model/product';
-import ProductForm from '../product/product';
-import Detail from '../detail/detail';
+import Blotter from './blotter'
+import { Product } from '../model/product';
+import ProductForm from './product';
+import Detail from './detail';
 
 import {
     BrowserRouter as Router,
@@ -11,22 +11,26 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import { About } from '../about/about';
-import { Home } from '../home/home';
-import { createBrowserHistory } from 'history';
-
-const initial: Product[] = [
-    { id: 1, name: 'coca' },
-    { id: 2, name: 'pepsi' }
-];
+import { About } from './about';
+import { Home } from './home';
+import { atom, RecoilRoot, useRecoilState } from 'recoil';
+import { productList, RefreshLink } from './refreshlink';
+import { Call } from './call';
 
 export default function Blog() {
-    const [products, setProducts] = useState<Product[]>(initial);
+    const [products, setProducts] = useRecoilState<Product[]>(productList);
     const [product, setProduct] = useState<Product | null>(null);
     const [mode, setMode] = useState<'VIEW' | 'EDIT'>('VIEW');
 
     useEffect(() => {
-        console.log('blog');
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: 'React POST Request Example' })
+        };
+        fetch('https://reqres.in/api/posts', requestOptions)
+        .then(response => response.json())
+        .then(data => console.log(data));
     });
 
     const editProduct = (pr: Product) => {
@@ -45,7 +49,9 @@ export default function Blog() {
 
             if (index !== -1) {
                 const ps = products.slice();
-                ps[index].name = product.name;
+                console.log(ps, index, product)
+                ps[index] = {...ps[index], name: product.name};
+                //ps[index].name = product.name;
                 setProducts(ps);
                 closeProduct();
             }
@@ -94,7 +100,7 @@ export default function Blog() {
         setProduct({ name: '' });
         setMode('EDIT');
     }
-
+      
     return (
         <Router basename={process.env.PUBLIC_URL}>
             <div>
@@ -105,6 +111,8 @@ export default function Blog() {
                         <Link className="p-2 text-dark" to="./">Home</Link>
                         <Link className="p-2 text-dark" to="./products">Products</Link>
                         <Link className="p-2 text-dark" to="./about">About</Link>
+                        <Link className="p-2 text-dark" to="./call">Call</Link>
+                        <RefreshLink></RefreshLink>
                     </nav>
                     <a className="btn btn-outline-primary" href="#">Sign up</a>
                 </div>
@@ -112,8 +120,11 @@ export default function Blog() {
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <Switch>
-                    <Route path="/about">
+                <Route path="/about">
                         <About />
+                    </Route>
+                    <Route path="/call">
+                        <Call />
                     </Route>
                     <Route path="/products">
                         <div className="container">
