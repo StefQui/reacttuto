@@ -13,12 +13,13 @@ import {
 } from "react-router-dom";
 import { About } from './about';
 import { Home } from './home';
-import { atom, RecoilRoot, useRecoilState } from 'recoil';
-import { productList, RefreshLink } from './refreshlink';
+import { atom, RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import { productCount, productList, RefreshLink } from './refreshlink';
 import { Call } from './call';
 
 export default function Blog() {
     const [products, setProducts] = useRecoilState<Product[]>(productList);
+    const count = useRecoilValue(productCount);
     const [product, setProduct] = useState<Product | null>(null);
     const [mode, setMode] = useState<'VIEW' | 'EDIT'>('VIEW');
 
@@ -112,7 +113,7 @@ export default function Blog() {
                         <Link className="p-2 text-dark" to="./products">Products</Link>
                         <Link className="p-2 text-dark" to="./about">About</Link>
                         <Link className="p-2 text-dark" to="./call">Call</Link>
-                        <RefreshLink></RefreshLink>
+                        <RefreshLink></RefreshLink> {count} products
                     </nav>
                     <a className="btn btn-outline-primary" href="#">Sign up</a>
                 </div>

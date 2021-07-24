@@ -1,5 +1,5 @@
 import React from 'react';
-import { atom, useRecoilState } from 'recoil';
+import { atom, selector, useRecoilState } from 'recoil';
 import { Product } from '../model/product';
 
 const initial: Product[] = [
@@ -13,6 +13,14 @@ export const productList = atom({
     default: initial, // valeur par défaut (alias valeur initials)
   });
 
+  export const productCount = selector({
+    key: 'productCount', // unique ID (with respect to other atoms/selectors)
+    get: ({get}) => {
+      const list = get(productList);
+  
+      return list.length;
+    },
+  });
 
 export function RefreshLink() {
     const [products, setProducts] = useRecoilState<Product[]>(productList);
