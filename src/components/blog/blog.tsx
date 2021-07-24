@@ -5,6 +5,15 @@ import { Product } from '../../model/product';
 import ProductForm from '../product/product';
 import Detail from '../detail/detail';
 
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import { About } from '../about/about';
+import { Home } from '../home/home';
+
 const initial: Product[] = [
     { id: 1, name: 'coca' },
     { id: 2, name: 'pepsi' }
@@ -83,27 +92,53 @@ export default function Blog() {
     }
 
     return (
-        <div className="container">
-            <div className="row mb-3">
-                <h1>
-                    Blog
-                 </h1>
-            </div>
-            <div className="row mb-3">
-                <button className="btn btn-success" onClick={() => handleClickCreate()}>create</button>
-            </div>
+        <Router>
+            <div>
 
-            <div className="row mb-3">
-            <Blotter products={products}
-                edit={editProduct}
-                view={viewProduct}
-                delete={deleteProduct}></Blotter>
+                <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+                    <h5 className="my-0 mr-md-auto font-weight-normal">React demo</h5>
+                    <nav className="my-2 my-md-0 mr-md-3">
+                        <Link className="p-2 text-dark" to="/">Home</Link>
+                        <Link className="p-2 text-dark" to="/products">Products</Link>
+                        <Link className="p-2 text-dark" to="/about">About</Link>
+                    </nav>
+                    <a className="btn btn-outline-primary" href="#">Sign up</a>
                 </div>
-                {
-                    product ?
-                        renderProduct(product)
-                        : <p></p>
-                }
-        </div>
+
+                {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+                <Switch>
+                    <Route path="/about">
+                        <About />
+                    </Route>
+                    <Route path="/products">
+                        <div className="container">
+                            <div className="row mb-3">
+                                <h1>
+                                    Blog
+                 </h1>
+                            </div>
+                            <div className="row mb-3">
+                                <button className="btn btn-success" onClick={() => handleClickCreate()}>create</button>
+                            </div>
+
+                            <div className="row mb-3">
+                                <Blotter products={products}
+                                    edit={editProduct}
+                                    view={viewProduct}
+                                    delete={deleteProduct}></Blotter>
+                            </div>
+                            {
+                                product ?
+                                    renderProduct(product)
+                                    : <p></p>
+                            }
+                        </div>         </Route>
+                    <Route path="/">
+                        <Home />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
