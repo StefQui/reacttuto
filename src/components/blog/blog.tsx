@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import { About } from '../about/about';
 import { Home } from '../home/home';
+import { createBrowserHistory } from 'history';
 
 const initial: Product[] = [
     { id: 1, name: 'coca' },
@@ -95,7 +96,7 @@ export default function Blog() {
     }
 
     return (
-        <Router>
+        <Router basename={process.env.PUBLIC_URL}>
             <div>
 
                 <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">

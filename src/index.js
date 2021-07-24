@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Blog from './components/blog/blog';
-import { createBrowserHistory } from 'history';
-
 
 function Square(props) {
     return (
@@ -128,10 +126,6 @@ function Square(props) {
   
   // ========================================
   
-  export const history = createBrowserHistory({
-    basename: process.env.PUBLIC_URL
-});
-
   ReactDOM.render(<Blog />, document.getElementById("root"));
   
   function calculateWinner(squares) {
