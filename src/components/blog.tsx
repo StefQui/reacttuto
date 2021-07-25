@@ -9,7 +9,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
+    BrowserRouter
 } from "react-router-dom";
 import { About } from './about';
 import { Home } from './home';
@@ -103,7 +104,7 @@ export default function Blog() {
     }
       
     return (
-        <Router>
+        <BrowserRouter>
             <div>
 
                 <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -155,6 +156,6 @@ export default function Blog() {
                     </Route>
                 </Switch>
             </div>
-        </Router>
+        </BrowserRouter>
     );
 }
